@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login - Sugar Factory Portal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<style>
+:root {
+    --primary: #008080;
+    --secondary: #f4511e;
+    --bg-light: #f0f4f8;
+    --card-bg: #ffffff;
+    --text-color: #333;
+    --radius: 14px;
+    --shadow: 0 12px 28px rgba(0,0,0,0.12);
+    --hover: rgba(0,128,128,0.05);
+}
+
+* { box-sizing: border-box; margin:0; padding:0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg-light); color: var(--text-color); overflow-x: hidden; }
+#particles-js { position: absolute; width: 100%; height: 100%; z-index: 0; }
+
+.container { display: flex; justify-content: center; align-items: center; min-height: 100vh; position: relative; z-index: 1; padding: 20px; }
+
+.login-card {
+    background: var(--card-bg);
+    padding: 45px 35px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 450px;
+    position: relative;
+    z-index: 2;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.login-card:hover { transform: translateY(-6px); box-shadow: 0 16px 32px rgba(0,0,0,0.18); }
+
+.tab-header { display: flex; justify-content: space-around; margin-bottom: 35px; cursor: pointer; }
+.tab-header div { padding: 12px 25px; font-weight: 600; color: #666; border-bottom: 3px solid transparent; transition: all 0.3s ease; border-radius: var(--radius) var(--radius) 0 0; }
+.tab-header div.active { color: var(--primary); border-bottom: 3px solid var(--primary); }
+
+form { display: none; flex-direction: column; }
+form.active { display: flex; }
+
+form .input-group { margin-bottom: 20px; display: flex; flex-direction: column; }
+form label { margin-bottom: 6px; font-weight: 500; }
+form input { padding: 14px 16px; border-radius: var(--radius); border: 1px solid #ccc; transition: all 0.3s ease; font-size: 16px; }
+form input:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 6px var(--hover); }
+
+form button { padding: 14px; background: var(--primary); color: #fff; font-size: 16px; border: none; border-radius: var(--radius); cursor: pointer; transition: all 0.3s ease; font-weight: 600; }
+form button:hover { background: #006666; transform: translateY(-2px); }
+
+.form-links { display: flex; justify-content: space-between; font-size: 14px; margin-top: 12px; }
+.form-links a { color: var(--primary); text-decoration: none; transition: 0.2s; }
+.form-links a:hover { text-decoration: underline; color: #006666; }
+
+#loginMessage { color: red; font-weight: 600; margin-top: 15px; text-align: center; }
+
+@media(max-width:480px){
+    .login-card { padding: 35px 25px; }
+    .tab-header div { font-size: 14px; padding: 10px 12px; }
+}
+</style>
+</head>
+<body>
+
+<div id="particles-js"></div>
+
+<div class="container">
+    <div class="login-card">
+        <h2 style="text-align:center; margin-bottom:35px; color: var(--primary);">Sugar Factory Portal</h2>
+        
+        <div class="tab-header">
+            <div class="active" id="farmer-tab">Farmer Login</div>
+            <div id="admin-tab">Admin Login</div>
+        </div>
+        
+        <form id="farmer-form" class="active">
+            <div class="input-group">
+                <label for="farmer-mobile">Mobile Number</label>
+                <input type="text" id="farmer-mobile" name="mobile" placeholder="Enter Mobile Number" required>
+            </div>
+            <div class="input-group">
+                <label for="farmer-password">Password</label>
+                <input type="password" id="farmer-password" name="password" placeholder="Enter Password" required>
+            </div>
+            <button type="submit">Sign In</button>
+            <div class="form-links">
+                <a href="farmerPasswordForgotpage.html">Forgot Password?</a>
+                <a href="farmerRegistration.jsp">Register</a>
+            </div>
+            <div id="loginMessage"></div> <!-- Error messages appear here -->
+        </form>
+        
+        <form id="admin-form">
+            <div class="input-group">
+                <label for="admin-username">Username</label>
+                <input type="text" id="admin-username" name="username" placeholder="Enter Username" required>
+            </div>
+            <div class="input-group">
+                <label for="admin-password">Password</label>
+                <input type="password" id="admin-password" name="password" placeholder="Enter Password" required>
+            </div>
+            <button type="submit">Sign In</button>
+            <div class="form-links">
+                <a href="farmerPasswordForgotpage.html">Forgot Password?</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+const farmerTab = document.getElementById('farmer-tab');
+const adminTab = document.getElementById('admin-tab');
+const farmerForm = document.getElementById('farmer-form');
+const adminForm = document.getElementById('admin-form');
+
+farmerTab.addEventListener('click', () => {
+    farmerTab.classList.add('active');
+    adminTab.classList.remove('active');
+    farmerForm.classList.add('active');
+    adminForm.classList.remove('active');
+});
+adminTab.addEventListener('click', () => {
+    adminTab.classList.add('active');
+    farmerTab.classList.remove('active');
+    adminForm.classList.add('active');
+    farmerForm.classList.remove('active');
+});
+
+// AJAX login
+$("#farmer-form").submit(function(e){
+    e.preventDefault();
+    $("#loginMessage").text("");
+    $.ajax({
+        url: "FarmerLogin",
+        type: "POST",
+        data: $(this).serialize(),
+        success: function(response){
+            if(response.status === "success"){
+                $("#loginMessage").css("color","green").text(response.message);
+                setTimeout(() => { window.location.href="farmerDashboard.jsp"; }, 1000);
+            } else {
+                $("#loginMessage").css("color","red").text(response.message);
+            }
+        },
+        error: function(){
+            $("#loginMessage").css("color","red").text("Server error!");
+        }
+    });
+});
+
+// Initialize particles.js
+particlesJS("particles-js", {
+    "particles": {
+        "number": { "value": 50, "density": { "enable": true, "value_area": 800 } },
+        "color": { "value": "#008080" },
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.2, "random": true },
+        "size": { "value": 4, "random": true },
+        "line_linked": { "enable": true, "distance": 150, "color": "#008080", "opacity": 0.1, "width": 1 },
+        "move": { "enable": true, "speed": 2, "direction": "none", "random": true, "straight": false, "out_mode": "out" }
+    },
+    "interactivity": {
+        "detect_on": "canvas",
+        "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+        "modes": { "grab": { "distance": 120, "line_linked": { "opacity": 0.25 } }, "push": { "particles_nb": 4 } }
+    },
+    "retina_detect": true
+});
+</script>
+
+</body>
+</html>

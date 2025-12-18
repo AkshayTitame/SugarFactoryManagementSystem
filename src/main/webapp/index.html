@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard - Sugar Factory Management System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root {
+    --primary: #008080;
+    --secondary: #f4511e;
+    --success: #2e7d32;
+    --danger: #e53935;
+    --bg-light: #f4f6f8;
+    --card-bg: #fff;
+    --text-color: #333;
+    --radius: 12px;
+    --shadow: 0 8px 24px rgba(0,0,0,0.06);
+    --hover-light: rgba(0,128,128,0.05);
+}
+
+* {margin:0; padding:0; box-sizing:border-box;}
+body { font-family: 'Inter', sans-serif; background: var(--bg-light); color: var(--text-color); }
+
+/* Wrapper Layout */
+.wrapper { display: flex; min-height: 100vh; }
+
+/* Sidebar */
+.sidebar {
+    width: 240px;
+    background: var(--primary);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    transition: width 0.3s ease;
+}
+.sidebar h2 {
+    text-align: center;
+    padding: 25px 0;
+    font-size: 1.6rem;
+    font-weight: 700;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+.sidebar ul { list-style: none; margin-top: 20px; padding: 0; }
+.sidebar ul li {
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.25s ease-in-out;
+    border-radius: 0 20px 20px 0;
+}
+.sidebar ul li i { margin-right: 12px; font-size: 1.1rem; }
+.sidebar ul li:hover { background: var(--hover-light); color: #fff; }
+
+/* Main Content */
+.main-content { flex: 1; padding: 25px 40px; }
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.navbar h1 { color: var(--primary); font-size: 1.8rem; font-weight: 700; }
+.navbar .user {
+    display: flex; align-items: center; font-weight: 500;
+}
+.navbar .user i { margin-right: 8px; font-size: 1.4rem; }
+
+/* Dashboard Cards */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+.card {
+    background: var(--card-bg);
+    padding: 28px 22px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    position: relative;
+}
+.card i { font-size: 2.6rem; color: var(--primary); margin-bottom: 15px; display: block; }
+.card h3 { margin-bottom: 10px; color: var(--primary); font-size: 1.2rem; font-weight: 600; }
+.card p { font-size: 1.4rem; font-weight: 700; color: var(--text-color); }
+
+/* Card Hover Effect */
+.card::after {
+    content: '';
+    position: absolute; top:0; left:0; right:0; bottom:0;
+    background: var(--hover-light);
+    opacity: 0; border-radius: var(--radius);
+    transition: opacity 0.3s ease-in-out;
+}
+.card:hover::after { opacity: 1; transform: scale(1.02); }
+.card:hover { transform: translateY(-5px); box-shadow: 0 16px 35px rgba(0,0,0,0.08); }
+
+/* Recent Activity Table */
+.table-container {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+}
+.table-container h3 { margin-bottom: 20px; color: var(--primary); font-weight: 600; }
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+th { background: var(--primary); color: #fff; text-transform: uppercase; font-weight: 600; }
+tr:hover { background: var(--hover-light); }
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 18px;
+    margin-top: 40px;
+    color: #fff;
+    background: var(--primary);
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+/* Responsive */
+@media(max-width:768px){
+    .wrapper { flex-direction: column; }
+    .sidebar { width: 100%; flex-direction: row; overflow-x: auto; }
+    .sidebar ul { display: flex; flex-direction: row; }
+    .sidebar ul li { flex: 1; text-align: center; border-right: 1px solid rgba(255,255,255,0.2); }
+    .navbar { flex-direction: column; align-items: flex-start; margin-bottom: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrapper">
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>SFMS</h2>
+        <ul>
+            <li><i class="fa fa-user-plus"></i> Farmer Registration</li>
+            <li><i class="fa fa-user-tie"></i> Gat Officer Registration</li>
+            <li><i class="fa fa-sign-in-alt"></i> Gat Officer Login</li>
+            <li><i class="fa fa-user-shield"></i> Admin Login</li>
+            <li><i class="fa fa-user"></i> Farmer Login</li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Navbar -->
+        <div class="navbar">
+            <h1>Dashboard</h1>
+            <div class="user">
+                <i class="fa fa-user-circle"></i> <span>Welcome, Gat Officer</span>
+            </div>
+        </div>
+
+        <!-- Cards -->
+        <div class="cards">
+            <div class="card">
+                <i class="fa fa-tasks"></i>
+                <h3>Pending Approvals</h3>
+                <p>12</p>
+            </div>
+            <div class="card">
+                <i class="fa fa-users"></i>
+                <h3>Total Farmers</h3>
+                <p>350</p>
+            </div>
+            <div class="card">
+                <i class="fa fa-user-tie"></i>
+                <h3>Gat Officers</h3>
+                <p>25</p>
+            </div>
+            <div class="card">
+                <i class="fa fa-check-circle"></i>
+                <h3>Approved Cane</h3>
+                <p>120</p>
+            </div>
+        </div>
+
+        <!-- Recent Activity Table -->
+        <div class="table-container">
+            <h3>Recent Cane Registrations</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Registration No</th>
+                        <th>Farmer Name</th>
+                        <th>Cane Type</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CR-001</td>
+                        <td>John Doe</td>
+                        <td>Sugarcane Type A</td>
+                        <td>22/09/2025</td>
+                        <td>Pending</td>
+                    </tr>
+                    <tr>
+                        <td>CR-002</td>
+                        <td>Jane Smith</td>
+                        <td>Sugarcane Type B</td>
+                        <td>21/09/2025</td>
+                        <td>Approved</td>
+                    </tr>
+                    <tr>
+                        <td>CR-003</td>
+                        <td>Rahul Patil</td>
+                        <td>Sugarcane Type A</td>
+                        <td>20/09/2025</td>
+                        <td>Pending</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">
+            &copy; 2025 Sugar Factory Management System. All Rights Reserved.
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
